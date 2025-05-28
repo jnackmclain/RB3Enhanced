@@ -225,7 +225,8 @@ void ApplyPatches()
     // always fire the UpdatePresence function. TODO(Emma): look into it, still not firing when screen is changed :/
     POKE_32(PORT_UPDATEPRESENCEBLOCK_B, NOP);
 #ifdef RB3E_WII_BANK8
-    POKE_32(0x80419158, NOP); // nop debug crash enumerating content with legacysdmode disabled
+    // nop debug crash enumerating content with legacysdmode disabled
+    POKE_32(0x80419158, NOP);
 #endif
 #ifndef RB3E_WII_BANK8
     // always take the branch to 0x8024a628 so vocals can be selected without a mic plugged in
