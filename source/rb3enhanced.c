@@ -224,6 +224,7 @@ void ApplyPatches()
     POKE_32(PORT_NASWII_HOST, NOP);
     // always fire the UpdatePresence function. TODO(Emma): look into it, still not firing when screen is changed :/
     POKE_32(PORT_UPDATEPRESENCEBLOCK_B, NOP);
+    POKE_32(0x80419158, NOP); // nop debug crash enumerating content with legacysdmode disabled
 #ifndef RB3E_WII_BANK8
     // always take the branch to 0x8024a628 so vocals can be selected without a mic plugged in
     // bank 8 does not have the mic check
@@ -289,7 +290,6 @@ void ApplyConfigurablePatches()
         POKE_32(0x8006c984, LI(6, 1));
         POKE_32(0x8006a170, LI(6, 1));
         POKE_32(0x8006c9d0, LI(6, 1));
-        POKE_32(0x80419158, NOP); // nop debug crash enumerating content with legacysdmode disabled
         // POKE_32(0x8007b3d4, LI(6, 0x1b0));
 #else
         POKE_B(&OperatorEqualsFmt, 0x82a86ff0);
