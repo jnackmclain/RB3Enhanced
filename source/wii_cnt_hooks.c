@@ -96,7 +96,7 @@ int EC_GetContentInfos_hook(unsigned long long titleId, ec_content_info_t *conte
         {
             RB3E_DEBUG("Enumerating %s", sddirpath);
             // call the original so information about files on the NAND are populated
-            EC_GetContentInfos(titleId, contentInfos, numContentInfos);
+            // EC_GetContentInfos(titleId, contentInfos, numContentInfos);
             *numContentInfos = originalNumContentInfos;
             // we *do* have a directory, check if we need to fill the contentInfos buffer
             if (contentInfos != NULL)
