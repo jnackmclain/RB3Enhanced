@@ -289,6 +289,7 @@ void ApplyConfigurablePatches()
         POKE_32(0x8006c984, LI(6, 1));
         POKE_32(0x8006a170, LI(6, 1));
         POKE_32(0x8006c9d0, LI(6, 1));
+        POKE_32(0x80419158, NOP); // nop debug crash enumerating content with legacysdmode disabled
         // POKE_32(0x8007b3d4, LI(6, 0x1b0));
 #else
         POKE_B(&OperatorEqualsFmt, 0x82a86ff0);
