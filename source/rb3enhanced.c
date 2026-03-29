@@ -238,7 +238,10 @@ void ApplyPatches()
 #endif
 #elif RB3E_XBOX
     if (RB3E_IsEmulator())
+    {
+        POKE_32(PORT_OUTFIGCONFIG_COMPRESSTEXTURES, BLR);
         POKE_32(PORT_SONGMGR_ISDEMO_CHECK, NOP);
+    }
 
     // skips check for stagekit to allow for fog commands to be issued without a stagekit plugged in
     POKE_32(PORT_STAGEKIT_EXISTS, NOP);
