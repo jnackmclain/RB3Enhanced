@@ -157,11 +157,12 @@
 #define PORT_DXRND_SUSPEND 0x8273A370                // DxRnd::Suspend
 #define PORT_XBOXCONTENT_CONSTRUCTOR 0x8251fb40      // XboxContent::__ct
 #define PORT_CACHEMGRXBOX_MOUNTASYNC 0x827d7b38      // CacheMgrXbox::MountAsync
-#define PORT_BANDCHARDESC_NEWOBJECT 0x823399c0        // BandCharDesc::NewObject
-#define PORT_BANDCHARDESC_RELOADPREFABS 0x82339048        // BandCharDesc::ReloadPrefabs
+#define PORT_BANDCHARDESC_NEWOBJECT 0x823399c0       // BandCharDesc::NewObject
+#define PORT_BANDCHARDESC_RELOADPREFABS 0x82339048   // BandCharDesc::ReloadPrefabs
 #define PORT_PREFABCHAR_NEWOBJECT 0x82553f40         // PrefabChar::NewObject
 #define PORT_DIRLOADER_LOADOBJS 0x82757b00           // DirLoader::LoadObjs
 #define PORT_GETPREFABPORTRAITPATH 0x825d8078        // GetPortraitPath
+#define PORT_OUTFIGCONFIG_COMPRESSTEXTURES 0x8229d0a0 // OutfitConfig::CompressTextures
 // instance addresses
 #define PORT_MODIFIERMGR_POINTER 0x82dfec08 // pointer to ModifierManager
 #define PORT_ROCKCENTRALGATEWAY 0x82cc8f60  // address of RockCentralGateway
@@ -179,7 +180,7 @@
 #define PORT_OBJECTDIRMAINDIR 0x82e054b8    // ObjectDir::sMainDir
 #define PORT_MESH_GREV 0x82cc2638           // address of RndMesh::gRev
 #define PORT_DXRND 0x82e04b38               // address of TheDxRnd
-#define PORT_GPREFABS 0x82cbe1b8            // gPrefabs (directory for prefabs)
+#define PORT_GPREFABS 0x82cbe1b8            // gPrefabs (ObjectDir for prefabs)
 // import function stubs
 #define PORT_XEKEYSSETKEY_STUB 0x82c4c47c
 #define PORT_XEKEYSAESCBC_STUB 0x82c4c48c
