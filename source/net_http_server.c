@@ -108,8 +108,8 @@ void HTTP_Server_Accept(void *connection)
     char decoded_path[0x400];
     int request_valid = 0;
     char last_byte = '\0';
-    const char ok_response[] = "HTTP/1.1 200 OK\r\nServer: RB3Enhanced " RB3E_BUILDTAG "\r\nContent-Type: text/html\r\nX-Clacks-Overhead: GNU maxton\r\nContent-Length: 2\r\n\r\nOK";
-    const char notfound_response[] = "HTTP/1.1 404 Not Found\r\nServer: RB3Enhanced " RB3E_BUILDTAG "\r\nX-Clacks-Overhead: GNU maxton\r\nContent-Length: 9\r\n\r\nNot Found";
+    const char ok_response[] = "HTTP/1.1 200 OK\r\nServer: RB3Enhanced " RB3E_BUILDTAG "\r\nContent-Type: text/html\r\nX-Clacks-Overhead: GNU maxton, alyssa\r\nContent-Length: 2\r\n\r\nOK";
+    const char notfound_response[] = "HTTP/1.1 404 Not Found\r\nServer: RB3Enhanced " RB3E_BUILDTAG "\r\nX-Clacks-Overhead: GNU maxton, alyssa\r\nContent-Length: 9\r\n\r\nNot Found";
     char response_buffer[2000] = {0};
     int song_id = 0;
     char *shortname = NULL;
@@ -325,7 +325,7 @@ void HTTP_Server_Accept(void *connection)
         strcat(response_buffer, "HTTP/1.1 200 OK\r\n");
         strcat(response_buffer, "Server: RB3Enhanced " RB3E_BUILDTAG "\r\n");
         strcat(response_buffer, "Content-Type: text/html\r\n");
-        strcat(response_buffer, "X-Clacks-Overhead: GNU maxton\r\n");
+        strcat(response_buffer, "X-Clacks-Overhead: GNU maxton, alyssa\r\n");
         if (config.AllowCORS)
             strcat(response_buffer, "Access-Control-Allow-Origin: *\r\n");
         strcat(response_buffer, "\r\n");
@@ -358,7 +358,7 @@ void HTTP_Server_Accept(void *connection)
         strcat(response_buffer, "HTTP/1.1 200 OK\r\n");
         strcat(response_buffer, "Server: RB3Enhanced " RB3E_BUILDTAG "\r\n");
         strcat(response_buffer, "Content-Type: application/json\r\n");
-        strcat(response_buffer, "X-Clacks-Overhead: GNU maxton\r\n");
+        strcat(response_buffer, "X-Clacks-Overhead: GNU maxton, alyssa\r\n");
         if (config.AllowCORS)
             strcat(response_buffer, "Access-Control-Allow-Origin: *\r\n");
         strcat(response_buffer, "\r\n");

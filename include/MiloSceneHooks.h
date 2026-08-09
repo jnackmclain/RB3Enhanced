@@ -7,8 +7,14 @@
 #include "rb3/DirLoader.h"
 #include "rb3/Object.h"
 #include "rb3/Rnd/Transform.h"
-
+#include "rb3/Vector.h"
+#include "rb3/String.h"
 
 // void DirLoaderOpenFileHook(DirLoader *thisDirLoader);
 void LoadObj(Object *object, BinStream *stream);
 void VertexReadHook(BinStream *thisBinStream, Vector3 *vec3);
+void MakeOutfitPathHook(void *thisBandCharDesc, Symbol part, String *filePath);
+void* DirLoaderLoadObjsHook(String * filePath, int unk, int unk2);
+void* DirLoaderLoadObjs(String * filePath, int unk, int unk2);
+const char* GetPrefabPortraitPathHook(void* pPrefab);
+extern const char* GetPrefabPortraitPath(void * thisPrefabChar);

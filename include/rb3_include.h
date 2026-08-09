@@ -3,6 +3,7 @@
 
 #include "rb3/App.h"
 #include "rb3/Archive.h"
+#include "rb3/BandCharDesc.h"
 #include "rb3/BandLabel.h"
 #include "rb3/BandSongMgr.h"
 #include "rb3/BandUI.h"

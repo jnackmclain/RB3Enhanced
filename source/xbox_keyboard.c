@@ -1,4 +1,5 @@
 #ifdef RB3E_XBOX
+
 #include <xtl.h>
 #include "rb3/Data.h"
 #include "ports.h"
@@ -9,21 +10,27 @@ int TranslateVK(DWORD virtualKey, char shift)
 {
     // ASCII range
     // Honestly not sure why this range is even mapped, at these ranges the Unicode translation should be handling it
-    if (virtualKey >= 0x41 && virtualKey <= 0x5a) {
-        if (!shift) {
+    if (virtualKey >= 0x41 && virtualKey <= 0x5a)
+    {
+        if (!shift)
+        {
             return virtualKey;
-        } else {
+        }
+        else
+        {
             return tolower(virtualKey);
         }
     }
 
     // Function key range
-    if (virtualKey >= VK_F1 && virtualKey <= VK_F12) {
+    if (virtualKey >= VK_F1 && virtualKey <= VK_F12)
+    {
         return virtualKey + 0x121;
     }
 
     // Other keycode mappings
-    switch (virtualKey) {
+    switch (virtualKey)
+    {
     case VK_HOME:
         return 0x138;
     case VK_CAPITAL:
@@ -67,9 +74,9 @@ int TranslateVK(DWORD virtualKey, char shift)
     return virtualKey;
 }
 
-
 // Reimplementation of KeyboardPoll from DC3
-void KeyboardPoll() {
+void KeyboardPoll()
+{
     XINPUT_KEYSTROKE keystroke;
     DWORD keystrokeResult;
     static DataNode msgNodes[6] = {0};
@@ -79,13 +86,17 @@ void KeyboardPoll() {
     Symbol keySym;
     char unicodeChar[4];
     int keyCode;
-    
+
     keystrokeResult = XInputGetKeystroke(XUSER_INDEX_ANY, 2, &keystroke);
-    if (keystrokeResult == ERROR_SUCCESS && (keystroke.Flags & XINPUT_KEYSTROKE_KEYUP) == 0) {
+    if (keystrokeResult == ERROR_SUCCESS && (keystroke.Flags & XINPUT_KEYSTROKE_KEYUP) == 0)
+    {
         WideCharToMultiByte(0, 0, &keystroke.Unicode, 1, unicodeChar, 2, 0x0, 0x0);
-        if (unicodeChar[0] == '\0' || unicodeChar[0] < ' ' || unicodeChar[0] > '~') {
+        if (unicodeChar[0] == '\0' || unicodeChar[0] < ' ' || unicodeChar[0] > '~')
+        {
             keyCode = TranslateVK(keystroke.VirtualKey, (keystroke.Flags & XINPUT_KEYSTROKE_SHIFT) > 0);
-        } else {
+        }
+        else
+        {
             keyCode = (int)unicodeChar[0];
         }
 
@@ -123,9 +134,9 @@ void KeyboardPoll() {
         // alt
         msgNodes[5].type = INT_VALUE;
         msgNodes[5].value.intVal = (keystroke.Flags & XINPUT_KEYSTROKE_ALT) > 0;
-        
-        DataArrayExecute(&retNode, &keyMsg);
 
+        DataArrayExecute(&retNode, &keyMsg);
     }
 }
+
 #endif

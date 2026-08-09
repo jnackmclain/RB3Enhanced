@@ -238,7 +238,10 @@ void ApplyPatches()
 #endif
 #elif RB3E_XBOX
     if (RB3E_IsEmulator())
+    {
+        POKE_32(PORT_OUTFIGCONFIG_COMPRESSTEXTURES, BLR);
         POKE_32(PORT_SONGMGR_ISDEMO_CHECK, NOP);
+    }
 
     // skips check for stagekit to allow for fog commands to be issued without a stagekit plugged in
     POKE_32(PORT_STAGEKIT_EXISTS, NOP);
@@ -280,6 +283,14 @@ void ApplyConfigurablePatches()
         POKE_32(PORT_TATTOO_CHECK, LI(3, 1));
         POKE_32(PORT_FACE_PAINT_CHECK, LI(3, 1));
         POKE_32(PORT_VIDEO_VENUE_CHECK, LI(3, 1));
+    }
+
+    if (config.AllowGoldOnAllDifficulties == 1)
+    {
+        // Allows gold stars to be earned on all difficulties
+        POKE_32(PORT_GOLD_STAR_CHECK1, NOP);
+        POKE_32(PORT_GOLD_STAR_CHECK2, NOP);
+        POKE_32(PORT_GOLD_STAR_CHECK3, NOP);
     }
 
     if (config.DisableMenuMusic == 1)
@@ -402,6 +413,10 @@ void InitialiseFunctions()
     POKE_B(&BinstreamRead, PORT_BINSTREAMREAD);
     POKE_B(&BinstreamWriteEndian, PORT_BINSTREAMWRITEENDIAN);
     POKE_B(&BinstreamReadEndian, PORT_BINSTREAMREADENDIAN);
+#ifndef RB3E_WII_BANK8
+	POKE_B(&BandCharDescNewObject, PORT_BANDCHARDESC_NEWOBJECT);
+    POKE_B(&GetPrefabPortraitPath, PORT_GETPREFABPORTRAITPATH);
+#endif
 #ifdef RB3E_XBOX
     POKE_B(&DataArrayExecute, PORT_DATAARRAYEXECUTE);
 #endif
@@ -418,11 +433,15 @@ void InitialiseFunctions()
 void ApplyHooks()
 {
     POKE_B(PORT_DATAINITFUNCS_TAIL, &AddDTAFunctions);
-    POKE_B(PORT_ISSUPPORTEDLANGUAGE, &IsSupportedLanguageHook);
     POKE_B(PORT_OVERSHELLPARTSELECTPROVIDERRELOAD, &OvershellPartSelectProviderReload);
-//#ifndef RB3E_WII_BANK8
-//    POKE_B(PORT_BUILDINSTRUMENTSELECTION, &BuildInstrumentSelectionList);
-//#endif
+    //#ifndef RB3E_WII_BANK8
+    //    POKE_B(PORT_BUILDINSTRUMENTSELECTION, &BuildInstrumentSelectionList);
+    //#endif
+    // TODO(Emma): fix this buggy set of hooks
+    //POKE_B(PORT_ISSUPPORTEDLANGUAGE, &IsSupportedLanguageHook);
+#ifndef RB3E_WII_BANK8
+    POKE_B(PORT_BUILDINSTRUMENTSELECTION, &BuildInstrumentSelectionList);
+#endif
     POKE_BL(PORT_OPTIONSTR_DEFINE, &DefinesHook);
     POKE_BL(PORT_RUNLOOP_SPARE, &RB3E_RunLoop);
     HookFunction(PORT_LOCALIZE, &Localize, &LocalizeHook);
@@ -469,6 +488,11 @@ void ApplyHooks()
     POKE_BL(PORT_LOADOBJS_BCTRL, &LoadObj);
     POKE_BL(PORT_VERTEX_READ_1, &VertexReadHook);
     POKE_BL(PORT_VERTEX_READ_2, &VertexReadHook);
+
+    // prefab loader stuff only for 360 right now
+    HookFunction(PORT_BANDCHARDESC_MAKEOUTFITPATH, &MakeOutfitPath, &MakeOutfitPathHook);
+    HookFunction(PORT_GETPREFABPORTRAITPATH, &GetPrefabPortraitPath, &GetPrefabPortraitPathHook);
+    HookFunction(PORT_DIRLOADER_LOADOBJS, &DirLoaderLoadObjs, &DirLoaderLoadObjsHook);
 #endif
     RB3E_MSG("Hooks applied!", NULL);
 }
