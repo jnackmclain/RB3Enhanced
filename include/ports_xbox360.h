@@ -39,6 +39,9 @@
 #define PORT_FACE_PAINT_CHECK 0x82614a60         // check to see if face paint is unlocked
 #define PORT_TATTOO_CHECK 0x82614a9c             // check to see if tattoos are unlocked
 #define PORT_VIDEO_VENUE_CHECK 0x82581634        // check to see if video venues are unlocked
+#define PORT_GOLD_STAR_CHECK1 0x826a15b0         // sets the gold threshold to a massive number if not on expert 1
+#define PORT_GOLD_STAR_CHECK2 0x826a1654         // sets the gold threshold to a massive number if not on expert 2
+#define PORT_GOLD_STAR_CHECK3 0x826a118c         // sets the gold threshold to a massive number if not on expert 3
 #define PORT_OPTIONSTR_DEFINE 0x82510cc8         // bl to OptionStr("define", NULL) in PreInitSystem
 #define PORT_RENDER_RES_X_PATCH1 0x8273bf20      // instruction patch to force render width
 #define PORT_RENDER_RES_X_PATCH2 0x8273bf24      // instruction patch to force render width
@@ -48,8 +51,11 @@
 #define PORT_LOADOBJS_BCTRL 0x827562e4           // bctrl to Object::PreLoad insie of DirLoader::LoadObjs
 #define PORT_SONGMGR_ISDEMO_CHECK 0x82575f9c     // "bne" after IsUGC check inside SongMgr::IsDemo
 #define PORT_STAGEKIT_EXISTS 0x8228d03c          // StageKit check. nop over to allow for fog command without a physical StageKit connected.
+#define PORT_ADDTRACKVECTOR_BL 0x82777b70       // bl to vector_push_back inside of SongData::AddTrack
+#define PORT_GETGAMELIST 0x82770730             // SongData::GetGameList
 #define PORT_VERTEX_READ_1 0x82418704            // call to Vector3::operator>> to read vertex position
 #define PORT_VERTEX_READ_2 0x82418748            // call to Vector3::operator>> to read vertex normals
+#define PORT_BANDCHARDESC_MAKEOUTFITPATH 0x82335220 // BandCharDesc::MakeOutfitPath
 #define PORT_MULTIPLAYER_CRASH 0x82ae6880        // branch to a function that can crash in online multiplayer
 #define PORT_MULTIPLAYER_FIX 0x8282b238          // the function that doesn't crash
 #define PORT_QUAZAL_BREAKPOINT 0x828410c0        // address to DbgBreakPoint in Quazal::Platform::Breakpoint
@@ -90,6 +96,7 @@
 #define PORT_RANDOMINT 0x824f2f90                    // RandomInt(min, max)
 #define PORT_GETWIDGETBYNAME 0x82b9b880              // GemManager::GetWidgetByName
 #define PORT_GETSLOTCOLOR 0x82baa308                 // TrackConfig::GetSlotColor
+#define PORT_ADDSMASHERPLATETOVECTOR 0x82356980      // AddSmasherPlateToVector
 #define PORT_ARCHIVE_CT 0x82514408                   // Archive::_ct
 #define PORT_ARCHIVE_SETLOCATIONHARDDRIVE 0x82512b00 // Archive::SetLocationHardDrive
 #define PORT_ARCHIVE_MERGE 0x82513ee8                // Archive::Merge
@@ -106,6 +113,7 @@
 #define PORT_GAME_CT 0x8267bf30                      // Game::__ct
 #define PORT_GAME_DT 0x8267b1f0                      // Game::__dt
 #define PORT_GAMEGETACTIVEPLAYER 0x82678e88          // Game::GetActivePlayer
+#define PORT_OVERSHELLPARTSELECTPROVIDERRELOAD 0x82668c70 // OvershellPartSelectProvider::Reload
 #define PORT_GETBANDUSERS 0x82683b78                 // BandUserMgr::GetBandUsers
 #define PORT_GETBANDUSERFROMSLOT 0x82682b60          // BandUserMgr::GetBandUserFromSlot
 #define PORT_GETSONGID 0x827a87f0                    // GetSongID, function used when adding songs to BandSongMgr
@@ -113,6 +121,7 @@
 #define PORT_BUILDINSTRUMENTSELECTION 0x82668c70     // BuildInstrumentSelectionList(?) - actual name not known
 #define PORT_PREPARESOMEVECTORMAYBE 0x82796d90       // Prepares some vector, used by BuildInstrumentSelectionList
 #define PORT_SOMEVECTORPUSHBACKMAYBE 0x82b6aa10      // vector<class_Key<class_Vector2>,class_stlpmtx_std::StlNodeAlloc<class_Key<class_Vector2>_>_>::push_back
+#define PORT_VECTORPUSHBACK 0x82b5f808               // vector_push_back
 #define PORT_POSTPROC_DOPOST 0x82b89a08              // NgPostProc::DoPost
 #define PORT_MUSICLIBRARYSELECTMAYBE 0x8253EB00      // Selects an entry in the Music Library screen - actual name not known
 #define PORT_GETSYMBOLBYGAMEORIGIN 0x8265bb78        // SongSortByRecent::GetSymbolByGameOrigin
@@ -138,8 +147,27 @@
 #define PORT_METAMUSICPOLL 0x82711438                // MetaMusic::Poll
 #define PORT_METAMUSICSTART 0x82711a00               // MetaMusic::Start
 #define PORT_INITSONGMETADATA 0x827aa450             // InitSongMetadata
+#define PORT_SONGMETADATACONSTRUCTOR 0x827aa6e8           // SongMetadata::__ct
+#define PORT_SONGMETADATALOAD 0x825a3f58                  // SongMetadata::Load
 #define PORT_UPDATEPRESENCE 0x82680430               // PresenceMgr::UpdatePresence
 #define PORT_STEPSEQUENCEJOBSETSTEP 0x82af92b8       // Quazal::StepSequenceJob::SetStep
+#define PORT_RNDTEXNEWOBJECT 0x82273de0                   // RndTex::NewObject
+#define PORT_RNDMATNEWOBJECT 0x8240f5d0                   // RndMat::NewObject
+#define PORT_RNDTEXSETBITMAP 0x823ff678                   // RndTex::SetBitmap
+#define PORT_RNDTEXSETBITMAP2 0x823ff240                  // RndTex::SetBitmap2
+#define PORT_RNDTEXSETBITMAP3 0x823ff510                  // RndTex::SetBitmap3
+#define PORT_FILEPATHCONSTRUCTOR 0x82270210               // FilePath::__ct
+#define PORT_MUSICLIBRARY_CT 0x825451c8                   // MusicLibrary::__ct
+#define PORT_MUSICLIBRARYMAT 0x8253b440                   // MusicLibrary::Mat
+#define PORT_NODESORTGETNODE 0x825bf708                   // MusicLibrary::GetNodeByIndex
+#define PORT_GAMEGEMDB_CT 0x827931e0                      // GameGemDB::__ct
+#define PORT_ADDMULTIGEM 0x827930d8                       // GameGemDB::AddMultiGem
+#define PORT_SONGSORTMGRGETSORT 0x82595ff8                // SongSortMgr::GetSort
+#define PORT_DYNAMICTEX_CT 0x825f2318                     // DynamicTex::__ct
+#define PORT_DYNAMICTEX_DT 0x825f2210                     // DynamicTex::__dt
+#define PORT_RNDMATSETDIFFUSETEX 0x8238b130               // RndMat::SetDiffuseTex
+#define PORT_MUSICLIBRARYONENTER 0x82542238              // MusicLibrary::OnEnter
+#define PORT_MUSICLIBRARYONUNLOAD 0x82540450               // MusicLibrary::OnExit
 #define PORT_BINSTREAMWRITE 0x827c4f58               // BinStream::Write
 #define PORT_BINSTREAMREAD 0x827c4ea8                // BinStream::Read
 #define PORT_BINSTREAMREADENDIAN 0x827c5058          // BinStream::ReadEndian
@@ -153,6 +181,12 @@
 #define PORT_DXRND_SUSPEND 0x8273A370                // DxRnd::Suspend
 #define PORT_XBOXCONTENT_CONSTRUCTOR 0x8251fb40      // XboxContent::__ct
 #define PORT_CACHEMGRXBOX_MOUNTASYNC 0x827d7b38      // CacheMgrXbox::MountAsync
+#define PORT_BANDCHARDESC_NEWOBJECT 0x823399c0       // BandCharDesc::NewObject
+#define PORT_BANDCHARDESC_RELOADPREFABS 0x82339048   // BandCharDesc::ReloadPrefabs
+#define PORT_PREFABCHAR_NEWOBJECT 0x82553f40         // PrefabChar::NewObject
+#define PORT_DIRLOADER_LOADOBJS 0x82757b00           // DirLoader::LoadObjs
+#define PORT_GETPREFABPORTRAITPATH 0x825d8078        // GetPortraitPath
+#define PORT_OUTFIGCONFIG_COMPRESSTEXTURES 0x8229d0a0 // OutfitConfig::CompressTextures
 // instance addresses
 #define PORT_MODIFIERMGR_POINTER 0x82dfec08 // pointer to ModifierManager
 #define PORT_ROCKCENTRALGATEWAY 0x82cc8f60  // address of RockCentralGateway
@@ -170,6 +204,7 @@
 #define PORT_OBJECTDIRMAINDIR 0x82e054b8    // ObjectDir::sMainDir
 #define PORT_MESH_GREV 0x82cc2638           // address of RndMesh::gRev
 #define PORT_DXRND 0x82e04b38               // address of TheDxRnd
+#define PORT_GPREFABS 0x82cbe1b8            // gPrefabs (ObjectDir for prefabs)
 // import function stubs
 #define PORT_XEKEYSSETKEY_STUB 0x82c4c47c
 #define PORT_XEKEYSAESCBC_STUB 0x82c4c48c
