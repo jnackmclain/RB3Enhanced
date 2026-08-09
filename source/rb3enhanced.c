@@ -433,21 +433,18 @@ void InitialiseFunctions()
 void ApplyHooks()
 {
     POKE_B(PORT_DATAINITFUNCS_TAIL, &AddDTAFunctions);
-    //idk what this is rn
-    //POKE_B(PORT_OVERSHELLPARTSELECTPROVIDERRELOAD, &OvershellPartSelectProviderReload);
+    POKE_B(PORT_OVERSHELLPARTSELECTPROVIDERRELOAD, &OvershellPartSelectProviderReload);
     //#ifndef RB3E_WII_BANK8
     //    POKE_B(PORT_BUILDINSTRUMENTSELECTION, &BuildInstrumentSelectionList);
     //#endif
     // TODO(Emma): fix this buggy set of hooks
     //POKE_B(PORT_ISSUPPORTEDLANGUAGE, &IsSupportedLanguageHook);
-#ifndef RB3E_WII_BANK8
-    POKE_B(PORT_BUILDINSTRUMENTSELECTION, &BuildInstrumentSelectionList);
-#endif
     POKE_BL(PORT_OPTIONSTR_DEFINE, &DefinesHook);
     POKE_BL(PORT_RUNLOOP_SPARE, &RB3E_RunLoop);
     HookFunction(PORT_LOCALIZE, &Localize, &LocalizeHook);
     HookFunction(PORT_WILLBENOSTRUM, &WillBeNoStrum, &WillBeNoStrumHook);
     HookFunction(PORT_ADDGAMEGEM, &AddGameGem, &AddGameGemHook);
+    HookFunction(PORT_SETSONGANDARTISTNAME, &SetSongAndArtistName, SetSongAndArtistNameHook);
     HookFunction(PORT_SETVENUE, &SetVenue, &SetVenueHook);
     HookFunction(PORT_MODIFIERMGR_CT, &ModifierManagerConstructor, &ModifierManagerConstructorHook);
     HookFunction(PORT_NEWFILE, &NewFile, &NewFileHook);
@@ -482,6 +479,7 @@ void ApplyHooks()
     POKE_B(PORT_FILEISLOCAL, &FileIsLocalHook);
 #elif RB3E_XBOX // 360 exclusive hooks
     HookFunction(PORT_STAGEKIT_SET_STATE, &StagekitSetState, &StagekitSetStateHook);
+    HookFunction(PORT_SETSONGNAMEFROMNODE, &SetSongNameFromNode, &SetSongNameFromNodeHook);
     // TODO: port these to Wii
     HookFunction(PORT_DATANODEGETOBJ, &DataNodeGetObj, &DataNodeGetObjHook);
     POKE_B(PORT_GETSONGID, &GetSongIDHook);

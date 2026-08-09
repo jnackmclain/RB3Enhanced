@@ -42,6 +42,7 @@
 #include "rb3/TextStream.h"
 #include "rb3/TrackPanelDirBase.h"
 #include "rb3/UsbWii.h"
+#include "rb3/Vector.h"
 #include "quazal/InetAddress.h"
 #include "quazal/QuazalSocket.h"
 
